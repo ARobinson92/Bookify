@@ -1,4 +1,4 @@
-package com.bookify.app.models;
+package com.bookify.authentication.app.models;
 
 import java.util.Date;
 
