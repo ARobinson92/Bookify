@@ -1,4 +1,4 @@
-package com.bookify.models;
+package com.bookify.authentication.models;
 
 import java.util.Date;
 import java.util.List;
@@ -18,6 +18,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
+
+import com.bookify.authentication.app.models.Trip;
 
 @Entity
 @Table(name="users")

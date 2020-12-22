@@ -1,4 +1,4 @@
-package com.bookify.services;
+package com.bookify.authentication.app.services;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,8 +8,8 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.bookify.models.Trip;
-import com.bookify.repositories.AppRepository;
+import com.bookify.authentication.app.models.Trip;
+import com.bookify.authentication.app.repositories.AppRepository;
 
 @Service
 public class AppService {

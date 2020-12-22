@@ -1,9 +1,9 @@
-package com.bookify.validators;
+package com.bookify.authentication.validators;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import com.bookify.models.User;
+import com.bookify.authentication.models.User;
 
 @Component
 public class UserValidator implements Validator {

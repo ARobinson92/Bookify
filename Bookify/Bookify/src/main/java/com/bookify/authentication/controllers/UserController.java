@@ -1,4 +1,4 @@
-package com.bookify.controllers;
+package com.bookify.authentication.controllers;
 
 import java.util.List;
 
@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.bookify.models.Trip;
-import com.bookify.models.User;
-import com.bookify.services.AppService;
-import com.bookify.services.UserService;
-import com.bookify.validators.UserValidator;
+import com.bookify.authentication.app.models.Trip;
+import com.bookify.authentication.app.services.AppService;
+import com.bookify.authentication.models.User;
+import com.bookify.authentication.services.UserService;
+import com.bookify.authentication.validators.UserValidator;
 
 @Controller
 public class UserController {

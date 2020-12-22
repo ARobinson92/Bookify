@@ -1,4 +1,4 @@
-package com.bookify.controllers;
+package com.bookify.authentication.app.controllers;
 
 import java.util.List;
 
@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.bookify.models.Trip;
-import com.bookify.services.AppService;
-import com.bookify.services.UserService;
+import com.bookify.authentication.app.models.Trip;
+import com.bookify.authentication.app.services.AppService;
+import com.bookify.authentication.services.UserService;
 
 public class AppController {
 

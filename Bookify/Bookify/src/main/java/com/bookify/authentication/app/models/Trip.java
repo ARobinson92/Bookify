@@ -1,4 +1,4 @@
-package com.bookify.models;
+package com.bookify.authentication.app.models;
 
 import java.util.Date;
 import java.util.List;
@@ -18,6 +18,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.bookify.authentication.models.User;
 
 @Entity
 @Table(name="trips")

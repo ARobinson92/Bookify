@@ -18,9 +18,7 @@
 </head>
 <body>
 
-	<c:if test="${userEmail} == ${trip.creator}" var="variable" scope="scope">
-		<a href="/trips/${trip.id}/edit">Edit</a>
-	</c:if>
+
 
 	<h1>Destination: ${trip.destination}</h1>
 	<br />
