@@ -1,4 +1,4 @@
-package com.bookify.app.models;
+package com.bookify.models;
 
 import java.util.Date;
 
@@ -15,8 +15,6 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
-
-import com.bookify.authentication.models.User;
 
 @Entity
 @Table(name="users_trips")

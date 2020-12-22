@@ -1,9 +1,9 @@
-package com.bookify.authentication.repositories;
+package com.bookify.repositories;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import com.bookify.authentication.models.User;
+import com.bookify.models.User;
 
 @Repository
 public interface UserRepository extends CrudRepository<User, Long> {

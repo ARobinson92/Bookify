@@ -1,12 +1,12 @@
-package com.bookify.authentication.services;
+package com.bookify.services;
 
 import java.util.Optional;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
-import com.bookify.authentication.models.User;
-import com.bookify.authentication.repositories.UserRepository;
+import com.bookify.models.User;
+import com.bookify.repositories.UserRepository;
 
 @Service
 public class UserService {

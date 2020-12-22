@@ -1,4 +1,6 @@
-package com.bookify.authentication.controllers;
+package com.bookify.controllers;
+
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -8,25 +10,31 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.bookify.authentication.models.User;
-import com.bookify.authentication.services.UserService;
-import com.bookify.authentication.validators.UserValidator;
+import com.bookify.models.Trip;
+import com.bookify.models.User;
+import com.bookify.services.AppService;
+import com.bookify.services.UserService;
+import com.bookify.validators.UserValidator;
 
 @Controller
 public class UserController {
 	private final UserService userService;
+	private final AppService appService;
 
 	 // NEW
     private final UserValidator userValidator;
     
     // NEW
-    public UserController(UserService userService, UserValidator userValidator) {
+    public UserController(UserService userService, UserValidator userValidator, AppService appService) {
         this.userService = userService;
         this.userValidator = userValidator;
+        this.appService = appService;
     }
     
     @GetMapping("/")
@@ -73,7 +81,9 @@ public class UserController {
 	public String home(HttpSession session, Model model) {
 		Long userId = (Long) session.getAttribute("user_id");
 		User u = userService.findUserById(userId);
+		List<Trip> trips = appService.getAll();
 		model.addAttribute("user", u);
+		model.addAttribute("trips", trips);
 		return "homePage.jsp";
 	}
 
@@ -81,5 +91,27 @@ public class UserController {
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return "redirect:/index";
+	}
+	
+	@GetMapping("/trips/{id}")
+	public String trips(@PathVariable("id") Long id, Model model, HttpSession session) {
+		Long userId = (Long) session.getAttribute("user_id");
+		User u = userService.findUserById(userId);
+		model.addAttribute("userEmail", u.getEmail());
+		Trip trip = appService.getOne(id).get();
+		List<User> users = trip.getUsers();
+		model.addAttribute("trip", trip);
+		model.addAttribute("users", users);
+		return "trip.jsp";
+	}
+	
+	@PostMapping("/trips/{id}")
+	public String addToTrip(@PathVariable("id") Long id, Model model, HttpSession session) {
+		Long userId = (Long) session.getAttribute("user_id");
+		User u = userService.findUserById(userId);
+		Trip trip = appService.getOne(id).get();
+		trip.getUsers().add(u);
+		appService.updateTrip(trip);
+		return "redirect:/trips/{id}";
 	}
 }

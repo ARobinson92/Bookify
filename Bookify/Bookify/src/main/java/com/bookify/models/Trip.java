@@ -1,4 +1,4 @@
-package com.bookify.app.models;
+package com.bookify.models;
 
 import java.util.Date;
 import java.util.List;
@@ -19,8 +19,6 @@ import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.bookify.authentication.models.User;
-
 @Entity
 @Table(name="trips")
 public class Trip {
@@ -31,6 +29,8 @@ public class Trip {
 	@Column
 	@Size(min = 2, message = "Destination should be at least 2 characters.")
 	private String destination;
+	@Column
+	private	String creator;
 	@Column
 	@NotNull(message = "Rating must be filled and between 1 and 5.")
 	private Integer rating;
@@ -52,10 +52,15 @@ public class Trip {
 	private Date updated_at;
 	
 	
-	public Trip(String destination, Integer rating, Date departure) {
+	public Trip(String destination, Integer rating, Date departure, String creator) {
 		this.destination = destination;
 		this.rating = rating;
 		this.departure = departure;
+		this.creator = creator;
+	}
+	
+	public Trip() {
+		
 	}
 
 	public Date getDeparture() {
@@ -112,6 +117,14 @@ public class Trip {
 
 	public void setUpdated_at(Date updated_at) {
 		this.updated_at = updated_at;
+	}
+
+	public String getCreator() {
+		return creator;
+	}
+
+	public void setCreator(String creator) {
+		this.creator = creator;
 	}
 
 	@PrePersist
