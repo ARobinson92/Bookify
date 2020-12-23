@@ -3,6 +3,7 @@ package com.bookify.authentication.models;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -19,6 +21,8 @@ import javax.persistence.Transient;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
+
+import com.bookify.authentication.app.models.Rating;
 import com.bookify.authentication.app.models.Trip;
 
 @Entity
@@ -40,6 +44,8 @@ public class User {
     			inverseJoinColumns = @JoinColumn(name = "user_id")
     			)
 	private List<Trip> trips;
+    @OneToMany(mappedBy="user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Rating> ratings;
     @Column(updatable=false)
     private Date createdAt;
     private Date updatedAt;

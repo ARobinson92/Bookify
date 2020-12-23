@@ -3,6 +3,7 @@ package com.bookify.authentication.app.models;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -46,6 +48,8 @@ public class Trip {
 				inverseJoinColumns = @JoinColumn(name = "trip_id")
 				)
 	private List<User> users;
+	@OneToMany(mappedBy="trip", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Rating> ratings;
 	@Column(updatable = false)
 	@DateTimeFormat(pattern = "MM/dd/yyyy HH:mm:ss")
 	private Date created_at;
@@ -61,8 +65,10 @@ public class Trip {
 		this.creator = creator;
 	}
 	
-	public Trip() {
-		
+	public Trip(String destination, Integer rating, Date departure) {
+		this.destination = destination;
+		this.rating = rating;
+		this.departure = departure;
 	}
 
 	public Date getDeparture() {
@@ -120,7 +126,7 @@ public class Trip {
 	public void setUpdated_at(Date updated_at) {
 		this.updated_at = updated_at;
 	}
-
+  
 	public String getCreator() {
 		return creator;
 	}
