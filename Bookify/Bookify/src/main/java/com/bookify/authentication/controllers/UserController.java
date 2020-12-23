@@ -54,7 +54,7 @@ public class UserController {
     public String registerUser(@Valid @ModelAttribute("user") User user, BindingResult result, HttpSession session) {
         userValidator.validate(user, result);
         if(result.hasErrors()) {
-            return "registrationPage.jsp";
+            return "redirect:/registration";
         }
         User u = userService.registerUser(user);
         session.setAttribute("user_id", u.getId());
@@ -88,7 +88,7 @@ public class UserController {
 	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
-		return "redirect:/index";
+		return "redirect:/";
 	}
 	
 	@GetMapping("/trips/{id}")
