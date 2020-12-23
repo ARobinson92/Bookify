@@ -56,7 +56,7 @@ public class UserController {
     public String registerUser(@Valid @ModelAttribute("user") User user, BindingResult result, HttpSession session) {
         userValidator.validate(user, result);
         if(result.hasErrors()) {
-            return "registrationPage.jsp";
+            return "redirect:/registration";
         }
         User u = userService.registerUser(user);
         session.setAttribute("user_id", u.getId());
@@ -90,7 +90,7 @@ public class UserController {
 	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
-		return "redirect:/index";
+		return "redirect:/";
 	}
 	
 	@GetMapping("/trips/{id}")
@@ -98,7 +98,7 @@ public class UserController {
 		Long userId = (Long) session.getAttribute("user_id");
 		User u = userService.findUserById(userId);
 		model.addAttribute("userEmail", u.getEmail());
-		Trip trip = appService.getOne(id).get();
+		Trip trip = appService.getOne(id);
 		List<User> users = trip.getUsers();
 		model.addAttribute("trip", trip);
 		model.addAttribute("users", users);
@@ -109,9 +109,9 @@ public class UserController {
 	public String addToTrip(@PathVariable("id") Long id, Model model, HttpSession session) {
 		Long userId = (Long) session.getAttribute("user_id");
 		User u = userService.findUserById(userId);
-		Trip trip = appService.getOne(id).get();
+		Trip trip = appService.getOne(id);
 		trip.getUsers().add(u);
-		appService.updateTrip(trip);
+		appService.save(trip);
 		return "redirect:/trips/{id}";
 	}
 }

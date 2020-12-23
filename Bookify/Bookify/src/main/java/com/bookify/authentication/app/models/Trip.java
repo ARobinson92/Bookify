@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -16,7 +17,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -28,16 +28,13 @@ import com.bookify.authentication.models.User;
 public class Trip {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	@Column
 	@Size(min = 2, message = "Destination should be at least 2 characters.")
 	private String destination;
 	@Column
-	private	String creator;
-	@Column
-	@NotNull(message = "Rating must be filled and between 1 and 5.")
-	private Integer rating;
+	private	Long creator_id;
 	@Column
 	@DateTimeFormat(pattern  = "MM/dd/yyyy")
 	private Date departure;
@@ -58,16 +55,14 @@ public class Trip {
 	private Date updated_at;
 	
 	
-	public Trip(String destination, Integer rating, Date departure, String creator) {
+	public Trip(String destination, Date departure, Long creator) {
 		this.destination = destination;
-		this.rating = rating;
 		this.departure = departure;
-		this.creator = creator;
+		this.creator_id = creator;
 	}
 	
-	public Trip(String destination, Integer rating, Date departure) {
+	public Trip(String destination, Date departure) {
 		this.destination = destination;
-		this.rating = rating;
 		this.departure = departure;
 	}
 
@@ -95,20 +90,20 @@ public class Trip {
 		this.destination = destination;
 	}
 
-	public Integer getRating() {
-		return rating;
-	}
-
-	public void setRating(Integer rating) {
-		this.rating = rating;
-	}
-
 	public List<User> getUsers() {
 		return users;
 	}
 
 	public void setUsers(List<User> users) {
 		this.users = users;
+	}
+
+	public List<Rating> getRatings() {
+		return ratings;
+	}
+
+	public void setRatings(List<Rating> ratings) {
+		this.ratings = ratings;
 	}
 
 	public Date getCreated_at() {
@@ -127,12 +122,12 @@ public class Trip {
 		this.updated_at = updated_at;
 	}
   
-	public String getCreator() {
-		return creator;
+	public Long getCreator_id() {
+		return creator_id;
 	}
 
-	public void setCreator(String creator) {
-		this.creator = creator;
+	public void setCreator(Long creator) {
+		this.creator_id = creator;
 	}
 
 	@PrePersist

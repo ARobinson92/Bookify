@@ -1,8 +1,5 @@
 package com.bookify.authentication.app.services;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,40 +11,32 @@ import com.bookify.authentication.app.repositories.AppRepository;
 @Service
 public class AppService {
 
-	private AppRepository appRepository;
+	private final AppRepository appRepository;
 
 	public AppService(AppRepository appRepository) {
 		this.appRepository = appRepository;
 	}
 
 	public List<Trip> getAll() {
-		return (List<Trip>) appRepository.findAll();
+		return appRepository.findAll();
 	}
 
-	public Optional<Trip> getOne(Long id) {
-		return appRepository.findById(id);
+	public Trip getOne(Long id) {
+		Optional<Trip> trip = appRepository.findById(id);
+		
+		if(trip.isPresent()) {
+			return trip.get();
+		} else {
+			return null;
+		}
 	}
 
-	public void addTrip(Trip trip) {
-		appRepository.save(trip);
-	}
-
-	public void updateTrip(Trip trip) {
-		appRepository.save(trip);
+	public Trip save(Trip trip) {
+		return appRepository.save(trip);
 	}
 
 	public void deleteTrip(Long id) {
 		appRepository.deleteById(id);
 	}
 
-	public List<Trip> topTen() {
-		ArrayList<Trip> trips = (ArrayList<Trip>) appRepository.findAll();
-		Collections.sort(trips, Comparator.comparingInt(Trip::getRating).reversed());
-		for (int i = 0; i < trips.size(); i++) {
-			if (i > 9) {
-				trips.remove(i);
-			}
-		}
-		return trips;
-	}
 }
