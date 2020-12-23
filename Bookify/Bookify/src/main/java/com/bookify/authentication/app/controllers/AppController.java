@@ -2,6 +2,7 @@ package com.bookify.authentication.app.controllers;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -16,51 +17,39 @@ import com.bookify.authentication.app.models.Trip;
 import com.bookify.authentication.app.services.AppService;
 import com.bookify.authentication.services.UserService;
 
+@Controller
 public class AppController {
 
-	@Controller
-	public class AppCtrl {
-		private final AppService appService;
+	private final AppService appService;
 
-		public AppCtrl(AppService appService, UserService userService) {
-			this.appService = appService;
-		}
+	public AppController(AppService appService, UserService userService) {
+		this.appService = appService;
+	}
 
-		@RequestMapping("/")
-		public String index(Model model) {
-			return "App/index.jsp";
-		}
+	@RequestMapping("/")
+	public String index(Model model) {
+		return "App/index.jsp";
+	}
 
-		@RequestMapping("/trips/new")
-		public String addNew(@ModelAttribute("addNew") Trip trip, Model model) {
-			return "new.jsp";
-		}
-
-		@RequestMapping(value = "/process", method = RequestMethod.POST)
-		public String process(@Valid @ModelAttribute("addNew") Trip trip, BindingResult result, Model model) {
-			if (result.hasErrors()) {
-				List<Trip> trips = appService.getAll();
-				model.addAttribute("trips", trips);
-				return "new.jsp";
-			} else {
-				appService.addTrip(trip);
-				return "redirect:/dashboard";
-			}
-		}
-
-		@RequestMapping("/search/topten")
-		public String topten(Model model) {
-			List<Trip> trips = appService.topTen();
+	@RequestMapping(value = "/process", method = RequestMethod.POST)
+	public String process(@Valid @ModelAttribute("trip") Trip trip, BindingResult result, Model model,
+			HttpSession session) {
+		if (result.hasErrors()) {
+			List<Trip> trips = appService.getAll();
 			model.addAttribute("trips", trips);
-			return "topten.jsp";
-		}
-
-		@RequestMapping("/delete/{id}")
-		public String delete(@PathVariable("id") Long id) {
-			appService.deleteTrip(id);
+			return "homePage.jsp";
+		} else {
+			Long userId = (Long) session.getAttribute("user_id");
+			Trip t = appService.save(trip);
+			t.setCreator(userId);
 			return "redirect:/home";
 		}
+	}
 
+	@RequestMapping("/delete/{id}")
+	public String delete(@PathVariable("id") Long id) {
+		appService.deleteTrip(id);
+		return "redirect:/home";
 	}
 
 }

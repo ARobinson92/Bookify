@@ -76,7 +76,7 @@ public class UserController {
 	}
 
 	@RequestMapping("/home")
-	public String home(HttpSession session, Model model) {
+	public String home(HttpSession session, Model model, @ModelAttribute("user") User user, @ModelAttribute("trip") Trip trip) {
 		Long userId = (Long) session.getAttribute("user_id");
 		User u = userService.findUserById(userId);
 		List<Trip> trips = appService.getAll();
@@ -96,7 +96,7 @@ public class UserController {
 		Long userId = (Long) session.getAttribute("user_id");
 		User u = userService.findUserById(userId);
 		model.addAttribute("userEmail", u.getEmail());
-		Trip trip = appService.getOne(id).get();
+		Trip trip = appService.getOne(id);
 		List<User> users = trip.getUsers();
 		model.addAttribute("trip", trip);
 		model.addAttribute("users", users);
@@ -107,9 +107,9 @@ public class UserController {
 	public String addToTrip(@PathVariable("id") Long id, Model model, HttpSession session) {
 		Long userId = (Long) session.getAttribute("user_id");
 		User u = userService.findUserById(userId);
-		Trip trip = appService.getOne(id).get();
+		Trip trip = appService.getOne(id);
 		trip.getUsers().add(u);
-		appService.updateTrip(trip);
+		appService.save(trip);
 		return "redirect:/trips/{id}";
 	}
 }
