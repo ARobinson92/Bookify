@@ -27,10 +27,8 @@ public class UserController {
 	private final UserService userService;
 	private final AppService appService;
 
-	 // NEW
     private final UserValidator userValidator;
-    
-    // NEW
+
     public UserController(UserService userService, UserValidator userValidator, AppService appService) {
         this.userService = userService;
         this.userValidator = userValidator;
