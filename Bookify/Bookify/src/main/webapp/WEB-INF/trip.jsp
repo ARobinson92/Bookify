@@ -46,6 +46,9 @@
 	<form:form action="/trips/${trip.id}" method="post">
 		<input type="submit" value="Join" />
 	</form:form>
+	<form:form action="/home">
+		<input type="submit" value="Home" />
+	</form:form>
 
 </body>
 </html>

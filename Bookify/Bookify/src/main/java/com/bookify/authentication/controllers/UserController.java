@@ -27,10 +27,8 @@ public class UserController {
 	private final UserService userService;
 	private final AppService appService;
 
-	 // NEW
     private final UserValidator userValidator;
-    
-    // NEW
+
     public UserController(UserService userService, UserValidator userValidator, AppService appService) {
         this.userService = userService;
         this.userValidator = userValidator;
@@ -78,7 +76,7 @@ public class UserController {
 	}
 
 	@RequestMapping("/home")
-	public String home(HttpSession session, Model model) {
+	public String home(HttpSession session, Model model, @ModelAttribute("user") User user, @ModelAttribute("trip") Trip trip) {
 		Long userId = (Long) session.getAttribute("user_id");
 		User u = userService.findUserById(userId);
 		List<Trip> trips = appService.getAll();

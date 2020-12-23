@@ -36,7 +36,10 @@ public class Trip {
 	@Column
 	private	Long creator_id;
 	@Column
-	@DateTimeFormat(pattern  = "MM/dd/yyyy")
+	@NotNull(message = "Rating must be filled and between 1 and 5.")
+	private Integer rating;
+	@Column
+	@DateTimeFormat(pattern  = "yyyy-MM-dd")
 	private Date departure;
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(
@@ -48,13 +51,12 @@ public class Trip {
 	@OneToMany(mappedBy="trip", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Rating> ratings;
 	@Column(updatable = false)
-	@DateTimeFormat(pattern = "MM/dd/yyyy HH:mm:ss")
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date created_at;
 	@Column
-	@DateTimeFormat(pattern = "MM/dd/yyyy HH:mm:ss")
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date updated_at;
-	
-	
+
 	public Trip(String destination, Date departure, Long creator) {
 		this.destination = destination;
 		this.departure = departure;
@@ -64,6 +66,10 @@ public class Trip {
 	public Trip(String destination, Date departure) {
 		this.destination = destination;
 		this.departure = departure;
+	}
+
+	public Trip() {
+		super();
 	}
 
 	public Date getDeparture() {
@@ -122,6 +128,7 @@ public class Trip {
 		this.updated_at = updated_at;
 	}
   
+
 	public Long getCreator_id() {
 		return creator_id;
 	}

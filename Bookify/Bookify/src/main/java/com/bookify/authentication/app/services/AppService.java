@@ -38,5 +38,4 @@ public class AppService {
 	public void deleteTrip(Long id) {
 		appRepository.deleteById(id);
 	}
-
 }

@@ -19,11 +19,10 @@ import com.bookify.authentication.app.models.Trip;
 import com.bookify.authentication.app.services.AppService;
 import com.bookify.authentication.services.UserService;
 
+@Controller
 public class AppController {
 
-	@Controller
-	public class AppCtrl {
-		private final AppService appService;
+	private final AppService appService;
 
 		public AppCtrl(AppService appService, UserService userService) {
 			this.appService = appService;
@@ -80,7 +79,4 @@ public class AppController {
 	    		return "redirect:/home";
 	    	}
 	    }
-
-	}
-
 }
