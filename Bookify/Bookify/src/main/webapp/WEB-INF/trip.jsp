@@ -24,8 +24,6 @@
 	<br />
 	<h2>This flight will be leaving on ${trip.departure}</h2>
 	<br />
-	<h2>Rating: ${trip.rating}</h2>
-	<br />
 	<h2>Users on this trip: </h2>
 	<br />
 	<table>

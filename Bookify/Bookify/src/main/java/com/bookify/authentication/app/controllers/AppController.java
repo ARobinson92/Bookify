@@ -24,7 +24,7 @@ public class AppController {
 
 	private final AppService appService;
 
-		public AppCtrl(AppService appService, UserService userService) {
+		public AppController(AppService appService, UserService userService) {
 			this.appService = appService;
 		}
 
@@ -33,17 +33,12 @@ public class AppController {
 			return "index.jsp";
 		}
 
-		@RequestMapping("/trips/new")
-		public String addNew(@ModelAttribute("addNew") Trip trip, Model model) {
-			return "new.jsp";
-		}
-
 		@RequestMapping(value = "/process", method = RequestMethod.POST)
 		public String process(@Valid @ModelAttribute("addNew") Trip trip, BindingResult result, Model model, HttpSession session) {
 			if (result.hasErrors()) {
 				List<Trip> trips = appService.getAll();
 				model.addAttribute("trips", trips);
-				return "new.jsp";
+				return "homePage.jsp";
 			} else {
 				Long userId = (Long) session.getAttribute("user_id");
 				Trip t = appService.save(trip);
@@ -62,7 +57,7 @@ public class AppController {
 		public String editForm(@PathVariable("id") Long id, Model model, HttpSession session) {
 			Long userId = (Long) session.getAttribute("user_id");
 			Trip trip = appService.getOne(id);
-			if(trip.getCreator_id() == userId) {
+			if(trip.getCreator_id() == session.getAttribute("user_id")) {
 				model.addAttribute("trip", trip);
 				return "edit.jsp";
 			} else {

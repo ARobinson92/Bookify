@@ -17,6 +17,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -35,9 +37,6 @@ public class Trip {
 	private String destination;
 	@Column
 	private	Long creator_id;
-	@Column
-	@NotNull(message = "Rating must be filled and between 1 and 5.")
-	private Integer rating;
 	@Column
 	@DateTimeFormat(pattern  = "yyyy-MM-dd")
 	private Date departure;

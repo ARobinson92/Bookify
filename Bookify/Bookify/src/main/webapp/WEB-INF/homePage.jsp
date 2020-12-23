@@ -24,7 +24,6 @@
 				<tr>
 					<th>Destination</th>
 					<th>Departure Date</th>
-					<th>Rating</th>
 					<th>Options</th>
 				</tr>
 			</thead>
@@ -33,7 +32,6 @@
 					<tr>
 						<td><c:out value="${trip.destination}" /></td>
 						<td><c:out value="${trip.departure}" /></td>
-						<td><c:out value="${trip.rating}" /></td>
 						<td><form action="/trips/${trip.id}">
 								<input type="submit" value="Show Trip Details">
 							</form></td>
@@ -54,11 +52,6 @@
 				<form:label path="departure">Departure Date:</form:label>
 				<form:errors path="departure" />
 				<form:input path="departure" type="date" />
-			</p>
-			<p>
-				<form:label path="rating">Rating:</form:label>
-				<form:errors path="rating" />
-				<form:input path="rating" />
 			</p>
 			<input type="submit" value="Submit" />
 		</form:form>
