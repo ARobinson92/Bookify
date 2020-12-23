@@ -34,6 +34,8 @@ public class Trip {
 	@Size(min = 2, message = "Destination should be at least 2 characters.")
 	private String destination;
 	@Column
+	private	String creator;
+	@Column
 	@NotNull(message = "Rating must be filled and between 1 and 5.")
 	private Integer rating;
 	@Column
@@ -55,6 +57,13 @@ public class Trip {
 	@DateTimeFormat(pattern = "MM/dd/yyyy HH:mm:ss")
 	private Date updated_at;
 	
+	
+	public Trip(String destination, Integer rating, Date departure, String creator) {
+		this.destination = destination;
+		this.rating = rating;
+		this.departure = departure;
+		this.creator = creator;
+	}
 	
 	public Trip(String destination, Integer rating, Date departure) {
 		this.destination = destination;
@@ -116,6 +125,14 @@ public class Trip {
 
 	public void setUpdated_at(Date updated_at) {
 		this.updated_at = updated_at;
+	}
+  
+	public String getCreator() {
+		return creator;
+	}
+
+	public void setCreator(String creator) {
+		this.creator = creator;
 	}
 
 	@PrePersist
